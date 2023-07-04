@@ -13,12 +13,11 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
-                script {
                     sh "$DOCKERHUB_CREDENTIALS_USR"
                    sh "$DOCKERHUB_CREDENTIALS_PSW" 
 				        sh "$DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR -p  $DOCKERHUB_CREDENTIALS_PSW"
                     }
-                }
+                
             }
         }
         
