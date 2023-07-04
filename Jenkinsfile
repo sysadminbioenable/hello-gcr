@@ -7,6 +7,7 @@ pipeline {
         SERVICE_NAME = 'hello'
         REGION = 'us-central1'
         DOCKERHUB_CREDENTIALS = credentials('docker')
+	GCLOUD_CREDS=credentials('gcloud-service-key')
     }
 
     stages {
@@ -21,7 +22,7 @@ pipeline {
        stage('Authenticate') {
 	      steps {  
 		   sh '''
-		  	gcloud auth activate-service-account --key-file="$gcloud-service-key"
+		  	gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
 		  '''
 		   
 	              }
@@ -64,7 +65,7 @@ pipeline {
         stage('Deploy Cloud Run Service') {
             steps {
                 script {
-                    withCredentials([file(credentialsId: 'gcloud-service-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                    withCredentials([file(credentialsId: '$GCLOUD_CREDS', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                         sh "gcloud auth activate-service-account --key-file=${env.GOOGLE_APPLICATION_CREDENTIALS}"
                         sh "gcloud config set project ${env.PROJECT_ID}"
                         sh "gcloud config set run/region ${env.REGION}"
