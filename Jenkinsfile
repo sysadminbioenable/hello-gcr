@@ -6,7 +6,7 @@ pipeline {
         IMAGE_NAME = 'hello'
         SERVICE_NAME = 'hello'
         REGION = 'us-central1'
-        #IMAGE_TAG = 'latest' // or specify a different tag if needed
+        
     }
     
     stages {
