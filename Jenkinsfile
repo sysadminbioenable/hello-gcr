@@ -39,7 +39,7 @@ pipeline {
         stage('Build') {
             steps {
                 
-                 sh "docker build -t moredatta574/${env.IMAGE_NAME} ."
+                 sh "docker build -t ${env.IMAGE_NAME} ."
                 
             }
         }
@@ -47,7 +47,7 @@ pipeline {
         stage('Push') {
             steps {
            
-                   sh "docker push moredatta574/${env.IMAGE_NAME}"
+                   sh "docker push ${env.IMAGE_NAME}"
         
             }
         }
@@ -62,13 +62,13 @@ pipeline {
 
         stage('Tag') {
             steps {
-                sh "docker tag moredatta574/${env.IMAGE_NAME} gcr.io/cryptic-album-384006/moredatta574/${env.IMAGE_NAME}"
+                sh "docker tag moredatta574/${env.IMAGE_NAME} gcr.io/cryptic-album-384006/${env.IMAGE_NAME}"
             }
         }
 
         stage('push') {
             steps {
-                sh "docker push gcr.io/cryptic-album-384006/moredatta574/${env.IMAGE_NAME}"
+                sh "docker push gcr.io/cryptic-album-384006/${env.IMAGE_NAME}"
             }
         }
 
