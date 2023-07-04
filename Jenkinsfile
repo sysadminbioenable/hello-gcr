@@ -20,17 +20,17 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh '''
-                    docker build -t moredatta574/${env.IMAGE_NAME} .
-                '''
+                
+                 sh "docker build -t moredatta574/${env.IMAGE_NAME} ."
+                
             }
         }
 
         stage('Push') {
             steps {
-                sh '''
-                    docker push moredatta574/${env.IMAGE_NAME}
-                '''
+           
+                   sh "docker push moredatta574/${env.IMAGE_NAME}"
+        
             }
         }
 
