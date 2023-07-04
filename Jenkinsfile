@@ -30,7 +30,7 @@ pipeline {
 	 stage('Auth') {
 	      steps {  
 		  
-		  	sh "gcloud auth login -y"
+		  	sh "gcloud auth configure-docker"
 		 
 		   
 	              }
