@@ -71,6 +71,7 @@ pipeline {
                         sh "gcloud config set project ${env.PROJECT_ID}"
                         sh "gcloud config set run/region ${env.REGION}"
                         sh "gcloud run deploy ${env.SERVICE_NAME} --image gcr.io/${env.PROJECT_ID}/${env.IMAGE_NAME} --port=${env.PORT} --platform managed"
+		
                     }
                 }
             }
@@ -78,7 +79,7 @@ pipeline {
 	stage('Allow allUsers') {
 	      steps {
 		sh '''
-		  gcloud run services add-iam-policy-binding hello --region='us-central1 --member='allUsers' --role='roles/run.invoker'
+		  gcloud run services add-iam-policy-binding hello --region='us-central1' --member='allUsers' --role='roles/run.invoker'
 		'''
 	      }
 	    }    
