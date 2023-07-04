@@ -79,7 +79,7 @@ pipeline {
 	stage('Allow allUsers') {
 	      steps {
 		sh '''
-		  gcloud run services add-iam-policy-binding  --region='us-central1' --member='allUsers' --role='roles/run.invoker'
+		  gcloud run services add-iam-policy-binding ${SERVICE_NAME}  --region='us-central1' --member='allUsers' --role='roles/run.invoker'
 		'''
 	      }
 	    }    
