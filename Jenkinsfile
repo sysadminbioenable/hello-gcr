@@ -7,17 +7,18 @@ pipeline {
         SERVICE_NAME = 'hello'
         REGION = 'us-central1'
         DOCKERHUB_CREDENTIALS = credentials('docker')
-        
     }
     
     stages {
         stage('Build Docker Image') {
             steps {
-                    sh "$DOCKERHUB_CREDENTIALS_USR"
-                   sh "$DOCKERHUB_CREDENTIALS_PSW" 
-				        sh "$DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR -p  $DOCKERHUB_CREDENTIALS_PSW"
+                script {
+                    withCredentials([usernamePassword(credentialsId: DOCKERHUB_CREDENTIALS, passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW', usernameVariable: 'DOCKERHUB_CREDENTIALS_USR')]) {
+                        sh "echo $DOCKERHUB_CREDENTIALS_USR"
+                        sh "echo $DOCKERHUB_CREDENTIALS_PSW"
+                        sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
                     }
-                
+                }
             }
         }
         
@@ -34,4 +35,4 @@ pipeline {
             }
         }
     }
-
+}
