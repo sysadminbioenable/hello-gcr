@@ -43,6 +43,14 @@ pipeline {
         
             }
         }
+	stage('list images') {
+            steps {
+           
+                   sh "docker images"
+        
+            }
+        }
+
 
         stage('Tag') {
             steps {
