@@ -18,40 +18,31 @@ pipeline {
 				}
 			}
 	    
-	  stage('build') {
+	 stage('build') {
 	      steps {
 		sh '''
 		  docker build -t moredatta574/${env.IMAGE_NAME} .
 		'''
 	      }
 	    }
-	  stage('push') {
+	stage('push') {
 	      steps {
 		sh '''
 		  docker push moredatta574/${env.IMAGE_NAME}
 		'''
 	      }
 	    }
-	  
-	    stage('pull'){
+         stage('tag'){
 		    steps{
-		       sh "docker pull  moredatta574/${env.IMAGE_NAME}"
-		    }
-		 }
-	       stage('tag'){
-		    steps{
-		       sh "docker tag  moredatta574/${env.IMAGE_NAME} gcr.io/capable-sphinx-378108/moredatta574/${env.IMAGE_NAME}"
+		       sh "docker tag  moredatta574/${env.IMAGE_NAME} gcr.io/cryptic-album-384006/moredatta574/${env.IMAGE_NAME}"
 		    }
 		 }
 	    
-	     stage('list'){
+	 stage('list'){
 		    steps{
-		       sh "gcloud container images list --repository=gcr.io/capable-sphinx-378108"
+		       sh "gcloud container images list --repository=gcr.io/cryptic-album-384006"
 		    }
 		 }
-
-
-        
         stage('Deploy Cloud Run Service') {
             steps {
                 script {
