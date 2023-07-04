@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     environment {
         PROJECT_ID = 'cryptic-album-384006'
         IMAGE_NAME = 'hello'
@@ -8,41 +8,44 @@ pipeline {
         REGION = 'us-central1'
         DOCKERHUB_CREDENTIALS = credentials('docker')
     }
-    
+
     stages {
         stage('Login') {
-			    steps {
-		      sh "echo $DOCKERHUB_CREDENTIALS_USR"
-		   sh "echo $DOCKERHUB_CREDENTIALS_PSW"
-				sh  "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW"
-				}
-			}
-	    
-	 stage('build') {
-	      steps {
-		sh '''
-		  docker build -t moredatta574/${env.IMAGE_NAME} .
-		'''
-	      }
-	    }
-	stage('push') {
-	      steps {
-		sh '''
-		  docker push moredatta574/${env.IMAGE_NAME}
-		'''
-	      }
-	    }
-         stage('tag'){
-		    steps{
-		       sh "docker tag  moredatta574/${env.IMAGE_NAME} gcr.io/cryptic-album-384006/moredatta574/${env.IMAGE_NAME}"
-		    }
-		 }
-	    
-	 stage('list'){
-		    steps{
-		       sh "gcloud container images list --repository=gcr.io/cryptic-album-384006"
-		    }
-		 }
+            steps {
+                sh "echo $DOCKERHUB_CREDENTIALS_USR"
+                sh "echo $DOCKERHUB_CREDENTIALS_PSW"
+                sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW"
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh '''
+                    docker build -t moredatta574/${env.IMAGE_NAME} .
+                '''
+            }
+        }
+
+        stage('Push') {
+            steps {
+                sh '''
+                    docker push moredatta574/${env.IMAGE_NAME}
+                '''
+            }
+        }
+
+        stage('Tag') {
+            steps {
+                sh "docker tag moredatta574/${env.IMAGE_NAME} gcr.io/cryptic-album-384006/moredatta574/${env.IMAGE_NAME}"
+            }
+        }
+
+        stage('List') {
+            steps {
+                sh "gcloud container images list --repository=gcr.io/cryptic-album-384006"
+            }
+        }
+
         stage('Deploy Cloud Run Service') {
             steps {
                 script {
