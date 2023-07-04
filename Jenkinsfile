@@ -44,22 +44,6 @@ pipeline {
             }
         }
 
-        stage('Push') {
-            steps {
-           
-                   sh "docker push ${env.IMAGE_NAME}"
-        
-            }
-        }
-	stage('list images') {
-            steps {
-           
-                   sh "docker images"
-        
-            }
-        }
-
-
         stage('Tag') {
             steps {
                 sh "docker tag moredatta574/${env.IMAGE_NAME} gcr.io/cryptic-album-384006/${env.IMAGE_NAME}"
