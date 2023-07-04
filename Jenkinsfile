@@ -18,6 +18,14 @@ pipeline {
             }
         }
 
+       stage('Authenticate') {
+	      steps {
+		    
+		    sh "gcloud auth activate-service-account --key-file="$gcloud-service-key"
+		   
+	              }
+	        }
+
         stage('Build') {
             steps {
                 
