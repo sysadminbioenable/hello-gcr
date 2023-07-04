@@ -8,6 +8,7 @@ pipeline {
         REGION = 'us-central1'
         DOCKERHUB_CREDENTIALS = credentials('docker')
 	GCLOUD_CREDS=credentials('gcloud-service-key')
+        PORT=5000
     }
 
     stages {
@@ -69,10 +70,17 @@ pipeline {
                         sh "gcloud auth activate-service-account --key-file=${env.GOOGLE_APPLICATION_CREDENTIALS}"
                         sh "gcloud config set project ${env.PROJECT_ID}"
                         sh "gcloud config set run/region ${env.REGION}"
-                        sh "gcloud run deploy ${env.SERVICE_NAME} --image gcr.io/${env.PROJECT_ID}/${env.IMAGE_NAME} --platform managed"
+                        sh "gcloud run deploy ${env.SERVICE_NAME} --image gcr.io/${env.PROJECT_ID}/${env.IMAGE_NAME} --port=${env.PORT} --platform managed"
                     }
                 }
             }
         }
+	stage('Allow allUsers') {
+	      steps {
+		sh '''
+		  gcloud run services add-iam-policy-binding hello --region='us-central1 --member='allUsers' --role='roles/run.invoker'
+		'''
+	      }
+	    }    
     }
 }
