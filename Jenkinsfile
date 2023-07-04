@@ -40,6 +40,12 @@ pipeline {
             }
         }
 
+        stage('push') {
+            steps {
+                sh "docker push gcr.io/cryptic-album-384006/moredatta574/${env.IMAGE_NAME}"
+            }
+        }
+
         stage('List') {
             steps {
                 sh "gcloud container images list --repository=gcr.io/cryptic-album-384006"
