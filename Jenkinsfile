@@ -6,6 +6,7 @@ pipeline {
         IMAGE_NAME = 'hello'
         SERVICE_NAME = 'hello'
         REGION = 'us-central1'
+        DOCKERHUB_CREDENTIALS = credentials('docker')
         
     }
     
@@ -13,9 +14,9 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://gcr.io', 'gcr-credentials') {
-                        sh "docker build -t gcr.io/${env.PROJECT_ID}/${env.IMAGE_NAME} ."
-                        sh "docker push gcr.io/${env.PROJECT_ID}/${env.IMAGE_NAME}"
+                    sh "$DOCKERHUB_CREDENTIALS_USR"
+                   sh "$DOCKERHUB_CREDENTIALS_PSW" 
+				        sh "$DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR -p  $DOCKERHUB_CREDENTIALS_PSW"
                     }
                 }
             }
