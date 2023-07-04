@@ -21,7 +21,7 @@ pipeline {
         stage('Deploy Cloud Run Service') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'gcloud-service-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                    withCredentials([file(credentialsId: 'gcloud-service-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                         sh "gcloud auth activate-service-account --key-file=${env.GOOGLE_APPLICATION_CREDENTIALS}"
                         sh "gcloud config set project ${env.PROJECT_ID}"
                         sh "gcloud config set run/region ${env.REGION}"
