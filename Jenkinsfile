@@ -31,7 +31,7 @@ pipeline {
 
     stage('Tag') {
       steps {
-        sh "docker tag ${env.IMAGE_NAME} gcr.io/nisarg-cludrun/${env.IMAGE_NAME}"
+        sh "docker tag hello gcr.io/nisarg-cludrun/${env.IMAGE_NAME}"
       }
     }
 
