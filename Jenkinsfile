@@ -2,7 +2,7 @@ pipeline {
   agent any 
 	environment{
 			google_creds='gcloud-service-key'
-	}
+	   }
   stages {
     stage('Login') {
       steps {
