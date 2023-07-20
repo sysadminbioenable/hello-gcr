@@ -51,9 +51,9 @@ pipeline {
       steps {
         script {
           withCredentials([file(credentialsId: 'gcloud-service-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-           # sh "gcloud auth activate-service-account --key-file=${env.GOOGLE_APPLICATION_CREDENTIALS}"
-          #  sh "gcloud config set project ${env.PROJECT_ID}"
-           # sh "gcloud config set run/region ${env.REGION}"
+           // sh "gcloud auth activate-service-account --key-file=${env.GOOGLE_APPLICATION_CREDENTIALS}"
+          // sh "gcloud config set project ${env.PROJECT_ID}"
+         // sh "gcloud config set run/region ${env.REGION}"
             sh "gcloud run deploy ${env.SERVICE_NAME} --image gcr.io/${env.PROJECT_ID}/${env.IMAGE_NAME} --port=${env.PORT} --platform managed"
 
           }
