@@ -1,8 +1,5 @@
 pipeline {
   agent any 
-	environment{
-			google_creds='gcloud-service-key'
-	   }
   stages {
     stage('Login') {
       steps {
@@ -15,7 +12,7 @@ pipeline {
     stage('Authenticate') {
       steps {
         sh '''
-		  	gcloud auth activate-service-account --key-file="$google_creds"
+		  	gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
 		  '''
       }
     }
