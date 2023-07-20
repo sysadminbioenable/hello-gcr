@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        PROJECT_ID = 'cryptic-album-384006'
+        PROJECT_ID = 'nisarg-cludrun
         IMAGE_NAME = 'hello'
         SERVICE_NAME = 'hello'
         REGION = 'us-central1'
@@ -47,19 +47,19 @@ pipeline {
 
         stage('Tag') {
             steps {
-                sh "docker tag moredatta574/${env.IMAGE_NAME} gcr.io/cryptic-album-384006/${env.IMAGE_NAME}"
+                sh "docker tag moredatta574/${env.IMAGE_NAME} gcr.io/nisarg-cludrun/${env.IMAGE_NAME}"
             }
         }
 
         stage('push') {
             steps {
-                sh "docker push gcr.io/cryptic-album-384006/${env.IMAGE_NAME}"
+                sh "docker push gcr.io/nisarg-cludrun/${env.IMAGE_NAME}"
             }
         }
 
         stage('List') {
             steps {
-                sh "gcloud container images list --repository=gcr.io/cryptic-album-384006"
+                sh "gcloud container images list --repository=gcr.io/nisarg-cludrun"
             }
         }
 
